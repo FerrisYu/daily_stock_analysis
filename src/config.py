@@ -1671,7 +1671,7 @@ class Config:
 
         channels: List[Dict[str, Any]] = []
         for raw_name in channels_str.split(','):
-            logger.debug(f"DEBUG::Parsing LLM channel config for raw name: '{" ".join(raw_name.split())}'")
+            _logger.debug(f"DEBUG::Parsing LLM channel config for raw name: '{" ".join(raw_name.split())}'")
             ch_name = raw_name.strip()
             if not ch_name:
                 continue
