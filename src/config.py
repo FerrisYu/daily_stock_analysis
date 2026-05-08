@@ -2482,6 +2482,7 @@ def get_api_keys_for_model(model: str, config: Config) -> List[str]:
     selection, so this function is not needed.  Kept for backward compat when
     no Router is built and a direct litellm.completion() call is needed.
     """
+    print(f"Debug: get_api_keys_for_model called with model='{model}'")
     provider = _get_litellm_provider(model)
     if provider in {"gemini", "vertex_ai"}:
         return [k for k in config.gemini_api_keys if k and len(k) >= 8]

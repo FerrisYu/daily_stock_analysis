@@ -1375,8 +1375,9 @@ class GeminiAnalyzer:
             or generation_config.get('max_tokens')
             or 8192
         )
+        print(f"config.litellm_model: {config.litellm_model}")
         requested_temperature = generation_config.get('temperature', 0.7)
-
+    
         models_to_try = [config.litellm_model] + (config.litellm_fallback_models or [])
         models_to_try = [m for m in models_to_try if m]
 
