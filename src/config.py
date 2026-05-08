@@ -1139,6 +1139,7 @@ class Config:
         # Priority 2: LLM_CHANNELS (env var based channel config)
         if not llm_model_list:
             _channels_str = os.getenv('LLM_CHANNELS', '').strip()
+            print(f"Debug: Raw LLM_CHANNELS string: {_channels_str}")
             if _channels_str:
                 llm_channels = cls._parse_llm_channels(_channels_str)
                 llm_model_list = cls._channels_to_model_list(llm_channels)
@@ -1146,6 +1147,7 @@ class Config:
                     llm_models_source = "llm_channels"
 
         # Priority 3: Legacy env vars → auto-build model_list (backward compatible)
+        
         if not llm_model_list:
             llm_model_list = cls._legacy_keys_to_model_list(
                 gemini_api_keys, anthropic_api_keys, openai_api_keys,
@@ -1167,7 +1169,8 @@ class Config:
                 "deepseek-chat will be deprecated on 2026-07-24,\n"
                 "please migrate to deepseek-v4-flash."
             )
-
+        print(f"Debug: LLM models source: {llm_models_source}, model_list: {llm_model_list}")
+        
         # Auto-infer LITELLM_MODEL from channels when not explicitly set
         if not litellm_model and llm_channels:
             for _ch in llm_channels:
@@ -1668,6 +1671,7 @@ class Config:
 
         channels: List[Dict[str, Any]] = []
         for raw_name in channels_str.split(','):
+            logger.debug(f"DEBUG::Parsing LLM channel config for raw name: '{" ".join(raw_name.split())}'")
             ch_name = raw_name.strip()
             if not ch_name:
                 continue
