@@ -1686,6 +1686,7 @@ class Config:
             api_keys = [k.strip() for k in api_keys_raw.split(',') if k.strip()]
             if not api_keys:
                 single_key = os.getenv(f'LLM_{ch_upper}_API_KEY', '').strip()
+                _logger.debug(f"DEBUG::No multi API keys found for channel '{ch_name}', checking single key: '{single_key}'")
                 if single_key:
                     api_keys = [single_key]
 
