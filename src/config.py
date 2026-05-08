@@ -196,6 +196,7 @@ def canonicalize_llm_channel_protocol(value: Optional[str]) -> str:
         "google": "gemini",
         "vertex": "vertex_ai",
         "vertexai": "vertex_ai",
+        "openrouter": "openai",
     }
     return aliases.get(candidate, candidate)
 
@@ -253,7 +254,10 @@ def normalize_llm_channel_model(model: str, protocol: Optional[str], base_url: O
 
     resolved_protocol = resolve_llm_channel_protocol(protocol, base_url=base_url, models=[normalized_model])
 
+    print("normalize_llm_channel_model:", normalized_model, "->", f"{resolved_protocol}/{normalized_model}")
+    
     if "/" in normalized_model:
+        print("Model already has a slash, checking prefix:", normalized_model)
         # The model already has a slash, e.g. 'deepseek-ai/DeepSeek-V3'.
         # Check if the prefix is a known LiteLLM provider; if so, keep it.
         # Otherwise (e.g. HuggingFace-style IDs on SiliconFlow), prepend
